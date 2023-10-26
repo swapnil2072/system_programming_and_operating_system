@@ -32,7 +32,19 @@ public class FCFS {
         }
 
                 // Sort processes based on arrival time
-        Collections.sort(processes, (p1, p2) -> p1.arrivalTime - p2.arrivalTime);
+        // Sort the list of processes based on their arrivalTime property
+        Collections.sort(processes, (process1, process2) -> {
+    // Compare the arrivalTime of process1 and process2
+        int comparisonResult = process1.arrivalTime - process2.arrivalTime;
+    
+    // If process1's arrivalTime is less than process2's arrivalTime,
+    // comparisonResult will be negative, indicating process1 comes before process2.
+    // If process1's arrivalTime is greater, comparisonResult will be positive,
+    // indicating process1 comes after process2.
+    // If arrivalTimes are equal, comparisonResult will be 0, indicating they are equal in terms of sorting.
+        return comparisonResult;
+        });
+
 
         int currentTime = 0;
         for (Process process : processes) {
@@ -55,8 +67,20 @@ public class FCFS {
         }
 
         // Calculate and display the average turnaround time and waiting time
-        double avgTurnaroundTime = processes.stream().mapToDouble(p -> p.turnaroundTime).average().orElse(0);
-        double avgWaitingTime = processes.stream().mapToDouble(p -> p.waitingTime).average().orElse(0);
+        // Calculate average turnaround time
+double totalTurnaroundTime = 0;
+for (Process p : processes) {
+    totalTurnaroundTime += p.turnaroundTime;
+}
+double avgTurnaroundTime = processes.isEmpty() ? 0 : totalTurnaroundTime / processes.size();
+
+// Calculate average waiting time
+double totalWaitingTime = 0;
+for (Process p : processes) {
+    totalWaitingTime += p.waitingTime;
+}
+double avgWaitingTime = processes.isEmpty() ? 0 : totalWaitingTime / processes.size();
+
         System.out.println("Average Turnaround Time: " + avgTurnaroundTime);
         System.out.println("Average Waiting Time: " + avgWaitingTime);
     }

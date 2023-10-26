@@ -86,8 +86,18 @@ public class RoundRobin {
         }
 
         // Calculate and display the average turnaround time and waiting time
-        double avgTurnaroundTime = processes.stream().mapToDouble(p -> p.turnaroundTime).average().orElse(0);
-        double avgWaitingTime = processes.stream().mapToDouble(p -> p.waitingTime).average().orElse(0);
+        double totalTurnaroundTime = 0;
+for (Process p : processes) {
+    totalTurnaroundTime += p.turnaroundTime;
+}
+double avgTurnaroundTime = processes.isEmpty() ? 0 : totalTurnaroundTime / processes.size();
+
+// Calculate average waiting time
+double totalWaitingTime = 0;
+for (Process p : processes) {
+    totalWaitingTime += p.waitingTime;
+}
+double avgWaitingTime = processes.isEmpty() ? 0 : totalWaitingTime / processes.size();
         System.out.println("Average Turnaround Time: " + avgTurnaroundTime);
         System.out.println("Average Waiting Time: " + avgWaitingTime);
     }
