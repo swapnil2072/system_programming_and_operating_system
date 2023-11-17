@@ -1,3 +1,5 @@
+//final SJF CODE 
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +23,7 @@ public class SJFPreemptive {
         int numberOfProcesses = in.nextInt();
 
         ArrayList<Process> processes = new ArrayList<>();
+        ArrayList<Process> completedProcesses = new ArrayList<>();
 
         for (int i = 0; i < numberOfProcesses; i++) {
             Process process = new Process();
@@ -60,6 +63,7 @@ public class SJFPreemptive {
                     shortestJob.completionTime = currentTime;
                     shortestJob.turnaroundTime = shortestJob.completionTime - shortestJob.arrivalTime;
                     shortestJob.waitingTime = shortestJob.turnaroundTime - shortestJob.burstTime;
+                    completedProcesses.add(shortestJob);
                 } else {
                     readyQueue.add(shortestJob);
                 }
@@ -70,24 +74,24 @@ public class SJFPreemptive {
 
         // Display the results
         System.out.println("Process\tArrival Time\tBurst Time\tCompletion Time\tTurnaround Time\tWaiting Time");
-        for (Process process : processes) {
-            System.out.println(process.id + "\t" + process.arrivalTime + "\t" + process.burstTime + "\t" +
-                    process.completionTime + "\t" + process.turnaroundTime + "\t" + process.waitingTime);
+        for (Process process : completedProcesses) {
+            System.out.println(process.id + "\t\t" + process.arrivalTime + "\t\t" + process.burstTime + "\t\t" +
+                    process.completionTime + "\t\t" + process.turnaroundTime + "\t\t" + process.waitingTime);
         }
 
         // Calculate and display the average turnaround time and waiting time
         double totalTurnaroundTime = 0;
-for (Process p : processes) {
+for (Process p : completedProcesses) {
     totalTurnaroundTime += p.turnaroundTime;
 }
-double avgTurnaroundTime = processes.isEmpty() ? 0 : totalTurnaroundTime / processes.size();
+double avgTurnaroundTime = completedProcesses.isEmpty() ? 0 : totalTurnaroundTime / completedProcesses.size();
 
 // Calculate average waiting time
 double totalWaitingTime = 0;
-for (Process p : processes) {
+for (Process p : completedProcesses) {
     totalWaitingTime += p.waitingTime;
 }
-double avgWaitingTime = processes.isEmpty() ? 0 : totalWaitingTime / processes.size();
+double avgWaitingTime = completedProcesses.isEmpty() ? 0 : totalWaitingTime / completedProcesses.size();
         System.out.println("Average Turnaround Time: " + avgTurnaroundTime);
         System.out.println("Average Waiting Time: " + avgWaitingTime);
     }

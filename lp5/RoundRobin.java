@@ -18,26 +18,33 @@ class Process {
 public class RoundRobin {
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
+
         System.out.println("Enter the number of processes:");
         int numberOfProcesses = in.nextInt();
+        
         System.out.println("Enter the time quantum:");
         int timeQuantum = in.nextInt();
+        
         ArrayList<Process> processes = new ArrayList<>();
         ArrayList<Process> completedProcesses = new ArrayList<>();
 
         for (int i = 0; i < numberOfProcesses; i++) {
             Process process = new Process();
             process.id = i + 1;
+
             System.out.println("Enter the burst time of Process " + process.id + ":");
             process.burstTime = in.nextInt();
+            
             System.out.println("Enter the arrival time of Process " + process.id + ":");
             process.arrivalTime = in.nextInt();
+            
             process.remainingTime = process.burstTime;
             processes.add(process);
         }
 
         int currentTime = 0;
         Queue<Process> readyQueue = new LinkedList<>();
+        
         while (!processes.isEmpty() || !readyQueue.isEmpty()) {
             for (int i = 0; i < processes.size(); i++) {
                 Process process = processes.get(i);
