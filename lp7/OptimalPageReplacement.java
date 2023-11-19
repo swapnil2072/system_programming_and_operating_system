@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class OptimalPageReplacement {
@@ -22,39 +21,56 @@ public class OptimalPageReplacement {
 
         ArrayList<Integer> frameList = new ArrayList<>();
         int pageFaults = 0;
+        int hits = 0;
 
-        for (int page : referenceString) {
+        for (int i = 0; i < numReferences; i++) {
+            int page = referenceString[i];
             if (!frameList.contains(page)) {
                 if (frameList.size() == frameCount) {
-                    int indexToRemove = findOptimalIndex(referenceString, frameList);
+                    int indexToRemove = findOptimalIndex(referenceString, frameList, i);
                     frameList.set(indexToRemove, page);
                 } else {
                     frameList.add(page);
                 }
                 pageFaults++;
+            } else {
+                hits++;
             }
+
+            // Print frame content after each page replacement
+            System.out.print("Frame Content: ");
+            for (int frame : frameList) {
+                System.out.print(frame + " ");
+            }
+            System.out.println();
         }
 
         System.out.println("Optimal Page Replacement Algorithm");
         System.out.println("Page Faults: " + pageFaults);
+        System.out.println("Hits: " + hits);
     }
 
-    private static int findOptimalIndex(int[] referenceString, ArrayList<Integer> frameList) {
+    private static int findOptimalIndex(int[] referenceString, ArrayList<Integer> frameList, int currentIndex) {
+        int indexToRemove = -1;
         int farthest = -1;
-        int index = -1;
 
         for (int i = 0; i < frameList.size(); i++) {
-            int page = frameList.get(i);
-            int farthestIndex = Arrays.asList(referenceString).indexOf(page);
-            if (farthestIndex == -1) {
-                return i;
+            int frame = frameList.get(i);
+            int farthestIndex = Integer.MAX_VALUE;
+
+            for (int j = currentIndex + 1; j < referenceString.length; j++) {
+                if (referenceString[j] == frame) {
+                    farthestIndex = j;
+                    break;
+                }
             }
+
             if (farthestIndex > farthest) {
                 farthest = farthestIndex;
-                index = i;
+                indexToRemove = i;
             }
         }
 
-        return index;
+        return indexToRemove;
     }
 }
