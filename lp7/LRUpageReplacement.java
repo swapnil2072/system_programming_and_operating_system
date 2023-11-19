@@ -20,6 +20,7 @@ public class LRUpageReplacement {
 
         LinkedList<Integer> frameList = new LinkedList<>();
         int pageFaults = 0;
+        int hits = 0;
 
         for (int page : referenceString) {
             if (!frameList.contains(page)) {
@@ -28,13 +29,22 @@ public class LRUpageReplacement {
                 }
                 frameList.add(page);
                 pageFaults++;
+
+                // Print frame content after each page fault
+                System.out.print("Frame Content: ");
+                for (int frame : frameList) {
+                    System.out.print(frame + " ");
+                }
+                System.out.println();
             } else {
                 frameList.removeFirstOccurrence(page);
                 frameList.add(page);
+                hits++;
             }
         }
 
-        System.out.println("LRU Page Replacement Algorithm");
+        System.out.println("\nLRU Page Replacement Algorithm");
         System.out.println("Page Faults: " + pageFaults);
+        System.out.println("Hits: " + hits);
     }
 }
