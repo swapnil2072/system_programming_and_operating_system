@@ -22,6 +22,7 @@ public class FIFOPageReplacement {
 
         Queue<Integer> frameQueue = new LinkedList<>();
         int pageFaults = 0;
+        int hits = 0;
 
         for (int page : referenceString) {
             if (!frameQueue.contains(page)) {
@@ -30,10 +31,20 @@ public class FIFOPageReplacement {
                 }
                 frameQueue.add(page);
                 pageFaults++;
+            } else {
+                hits++;
             }
+
+            // Print frame content after each page replacement
+            System.out.print("Frame Content: ");
+            for (int frame : frameQueue) {
+                System.out.print(frame + " ");
+            }
+            System.out.println();
         }
 
-        System.out.println("FIFO Page Replacement Algorithm");
+        System.out.println("\nFIFO Page Replacement Algorithm");
         System.out.println("Page Faults: " + pageFaults);
+        System.out.println("Hits: " + hits);
     }
 }
