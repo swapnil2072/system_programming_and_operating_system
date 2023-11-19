@@ -57,8 +57,8 @@ public class PriorityScheduling {
         // Display the results
         System.out.println("Process\tArrival Time\tBurst Time\tPriority\tCompletion Time\tTurnaround Time\tWaiting Time");
         for (Process process : processes) {
-            System.out.println(process.id + "\t" + process.arrivalTime + "\t" + process.burstTime + "\t" +
-                    process.priority + "\t" + process.completionTime + "\t" + process.turnaroundTime + "\t" + process.waitingTime);
+            System.out.println(process.id + "\t\t" + process.arrivalTime + "\t\t" + process.burstTime + "\t\t" +
+                    process.priority + "\t\t" + process.completionTime + "\t\t" + process.turnaroundTime + "\t\t" + process.waitingTime);
         }
 
         // Calculate and display the average turnaround time and waiting time
