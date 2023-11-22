@@ -87,10 +87,6 @@ public class NextFit {
 					MemoryBlock block = memory.get(i);
 					if(!block.allocated && block.size >= process.size) {
 						MemoryBlock allocatedBlock = new MemoryBlock(block.blockNo,block.startAddress,process.size);
-						if(block.size > process.size) {
-							MemoryBlock freeBlock = new MemoryBlock(block.blockNo,block.startAddress + process.size,block.size - process.size);
-							memory.add(i+1,freeBlock);
-						}
 						memory.set(i, allocatedBlock);
 						allocatedBlock.allocated = true;
 						allocatedBlock.processId = process.id;
